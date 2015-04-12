@@ -1,0 +1,45 @@
+
+body{
+	font-family: Thoma, sans-serif;
+	text-align: center;
+	background-color: #d1d1d1;
+	color: #3B3B3B;
+	font-size: 100%;
+	font-variant: small-caps;
+	
+	
+	margin: 10px;
+}
+
+h1{
+	color: #3B3B3B;
+	font-size: 175%;
+	margin: 20px;
+}
+
+.buttonHolder{
+	text-align:center;
+	display: block;
+}
+
+button{
+	font-variant: small-caps;
+	
+	margin: 5px;
+}
+
+.actual{
+	font-variant: small-caps;
+}
+
+select{
+	margin: 5px;
+}
+
+.euroSign{
+	margin: 5px;
+}
+
+#output{
+	margin: 20px;
+}

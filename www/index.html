@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    
+    
+
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+
+    <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+
+    <!-- lädt notwendige JavaScripts -->
+    <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/services.js"></script>
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script>
+		//Anfang des JQuery-Scripts
+		
+		//Löst die Effekte erst aus, wenn das Dokument vollständig geladen worden ist
+		$(document).ready(function(){
+			//Löst bei Knopfdruck aus
+		    $("#Button").click(function(){
+			    //Ruft die Funktion change() auf
+			    //anfangs war mehrfacher Aufruf geplant, deswegen ist der Text ausgelagert
+			    change();});
+		    
+		    $("#ziel").change(function(){
+			    change();});
+		});
+
+		//Liste aller Fremdwährungen zur Konvertierung für den Websitenzugriff
+		var listOfNamesShort=['AUD', 
+				'BGN', 'BRL', 
+				'CAD', 'CHF', 
+				'CNY', 'CZK',
+				'DKK', 'GBP', 
+				'HKD', 'HRF', 
+				'HUF', 'IDR', 
+				'ILS', 'INR', 
+				'JPY', 'KRW', 
+				'MXN', 'MYR', 
+				'NOK', 'NZD', 
+				'PHP', 'PLN', 
+				'RON', 'RUB', 
+				'SEK', 'SGD', 
+				'THB', 'TRY', 
+				'USD', 'ZAR'];
+
+		//Startet die Funktion, welche den eingegebenen Wert umrechnet
+		//und in der darunterliegenden Zeile ausgibt.
+		function change(){
+			//holt sich die ausgewählte Währung
+			var selectedEnd=$("#ziel")[0].selectedIndex;
+			if(selectedEnd==-1){
+				$("#ziel")[0].selectedIndex=0;
+				selectedEnd=0;
+			}
+			
+			//lädt die notwendigen Daten von fixer.io und gibt sie aus
+	    	$.get("http://api.fixer.io/latest?symbols="
+			    	+listOfNamesShort[selectedEnd], function( data ) {
+				var account=data["rates"][listOfNamesShort[selectedEnd]]*
+					$("#input").val();
+				$("#output").text(''+account+' '+listOfNamesShort[selectedEnd]);
+			});
+				
+
+		}
+	</script>
+  </head>
+  
+
+  
+  <body ng-app="starter">    
+  	<!-- Titel -->
+  	<h1>Euro-Konverter</h1>
+  
+    
+    <div class="euroSign">
+	    <!-- Wert-Eingabe -->
+		<input value="1" id="input"></input>
+		
+		<!-- simples stilistisches Hilfsmittel -->
+		Euro
+	</div>
+	
+	<!-- Auswahlfeld für die Auswahl der Zielwährung -->
+    <select name="ziel" size="5" id="ziel" >
+     	<option class="actual">Australian Dollar</option>
+		<option class="actual">Bulgarian Lev</option>
+		<option class="actual">Brasilian Real</option>
+		<option class="actual">Canadian Dollar</option>
+		<option class="actual">Swiss Frank</option>
+		<option class="actual">Chinese Yuan Renminbi</option>
+		<option class="actual">Cech Koruna</option>
+		<option class="actual">Danish Krone</option>
+		<option class="actual">British Pound Sterling</option>
+		<option class="actual">Hong Kong Dollar</option>
+		<option class="actual">Croatian Kuna</option>
+		<option class="actual">Hungarian Forint</option>
+		<option class="actual">Indonesian Rupiah</option>
+		<option class="actual">Israeli Shekel</option>
+		<option class="actual">Indian Rupee</option>
+		<option class="actual">Japanese Yen</option>
+		<option class="actual">Korean Won</option>
+		<option class="actual">Mexican Peso</option>
+		<option class="actual">Malaysian Ringgit</option>
+		<option class="actual">Norwegian Krone</option>
+		<option class="actual">New Zeeland Dollar</option>
+		<option class="actual">Philippine Pesos</option>
+		<option class="actual">Polish Zloty</option>
+		<option class="actual">Romanian New Leu</option>
+		<option class="actual">Russion Ruble</option>
+		<option class="actual">Swedish Krona</option>
+		<option class="actual">Singapore Dollar</option>
+		<option class="actual">Thai Baht</option>
+		<option class="actual">Turkish Lira</option>
+		<option class="actual">US Dollar</option>
+		<option class="actual">South Afrikan Rand</option>
+    </select>
+    
+    <!-- dieses Div dient zur besseren Darstellung  -->
+    <div class="buttonHolder">
+	    <!-- Button zur Berechnung -->
+	    <button type="button" id="Button">Umwandeln</button>
+    </div>
+    
+    <!-- Ausgabefeld der Berechnung -->
+    <div id="output">1 EUR</div>
+    
+  </body>
+</html>
